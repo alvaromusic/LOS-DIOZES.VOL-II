@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOS DIOZES.VOL II - Cuenta Atrás</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('banner188.png') no-repeat center center/cover;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            position: relative;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        #countdown {
+            font-size: 40px;
+            font-family: 'Playfair Display', serif;
+        }
+        #countdown-link {
+            color: white;
+            text-decoration: none;
+            font-size: 40px;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+        }
+        #countdown-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">LOS DIOZES.VOL II</h1>
+        <div id="countdown"></div>
+        <a id="countdown-link" href="https://open.spotify.com/intl-es/artist/48UuF5fve5rn1bGIOeOjc0?si=LU3tn7-mTuaQiw_9PRcW1w" style="display:none;" target="_blank">Ya disponible</a>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('March 25, 2025 00:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                document.getElementById('countdown').innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+            } else {
+                document.getElementById('title').innerHTML = "LoS DiiOZeS SoN dE KaLLe";
+                document.getElementById('countdown').innerHTML = "Ya disponible";
+                document.getElementById('countdown-link').style.display = 'inline-block';  // Mostrar enlace
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
