@@ -25,26 +25,79 @@
             font-family: 'Playfair Display', serif;
             font-size: 60px;
             margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out; /* Animación para el título */
         }
         #countdown {
             font-size: 40px;
             font-family: 'Playfair Display', serif;
+            animation: fadeIn 2s ease-in-out 1s; /* Animación para la cuenta atrás */
         }
-        #countdown-link {
+        #countdown-link, #title {
             color: white;
             text-decoration: none;
             font-size: 40px;
             font-family: 'Playfair Display', serif;
             cursor: pointer;
+            opacity: 0; /* Oculto por defecto */
+            animation: fadeIn 2s ease-in-out 2s forwards; /* Animación para el enlace */
         }
         #countdown-link:hover {
             text-decoration: underline;
+        }
+        #title {
+            cursor: pointer;
+        }
+
+        /* Animación de FadeIn */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animación de pulso (para cuando el enlace aparece) */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #countdown-link {
+            animation: fadeIn 2s ease-in-out 2s forwards, pulse 1s ease-in-out infinite; /* Pulsando la animación */
+        }
+
+        /* Animación para los números de la cuenta atrás */
+        @keyframes slideUp {
+            0% {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .countdown-number {
+            display: inline-block;
+            animation: slideUp 0.5s ease-in-out;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 id="title">LOS DIOZES.VOL II</h1>
+        <h1 id="title" onclick="window.location.href='https://open.spotify.com/intl-es/album/3SdjgYJtR8xqGaicLjXoyq?si=OiDPo4zVTv6Cg7SI74jP3A'">LOS DIOZES.VOL II</h1>
         <div id="countdown"></div>
         <a id="countdown-link" href="https://open.spotify.com/intl-es/artist/48UuF5fve5rn1bGIOeOjc0?si=LU3tn7-mTuaQiw_9PRcW1w" style="display:none;" target="_blank">Ya disponible</a>
     </div>
@@ -60,11 +113,17 @@
                 const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                document.getElementById('countdown').innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+
+                document.getElementById('countdown').innerHTML = 
+                    `<span class="countdown-number">${days}D</span> <span class="countdown-number">${hours}H</span> <span class="countdown-number">${minutes}M</span> <span class="countdown-number">${seconds}S</span>`;
             } else {
+                // Cambiar el texto a "LoS DiiOZeS SoN dE KaLLe" y desactivar el enlace
                 document.getElementById('title').innerHTML = "LoS DiiOZeS SoN dE KaLLe";
+                document.getElementById('title').style.cursor = 'default';  // Desactivar el cursor
+                document.getElementById('title').onclick = null;  // Desactivar el clic
                 document.getElementById('countdown').innerHTML = "Ya disponible";
                 document.getElementById('countdown-link').style.display = 'inline-block';  // Mostrar enlace
+                document.getElementById('countdown-link').style.animation = 'none'; // Detener animación de pulso después de que llegue a 0
             }
         }
         setInterval(updateCountdown, 1000);
